@@ -2,7 +2,5 @@
 Simple url shortener
 ====================
 
-Enter your redirecting urls in redirects.txt
-
-TODO: Add urls with a form.
+Enter your redirecting urls in redirects.txt or use the "shorturl=>longurl" format in a POST request.
 
