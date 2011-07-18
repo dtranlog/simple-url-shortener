@@ -1,0 +1,10 @@
+# example redirects file
+# format :  shorturl => longurl
+
+/g => http://www.google.com
+/r => http://www.reddit.com
+/w => http://www.wikipedia.org
+/y => http://www.youtube.com
+/+ => http://plus.google.com
+/r/tf2 => http://www.reddit.com/r/tf2
+
