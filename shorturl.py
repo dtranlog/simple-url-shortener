@@ -41,12 +41,12 @@ class ShortURLHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 		query_length = int(s.headers['Content-Length'])
 		urls = s.rfile.read(query_length) # curl --data "/shorturl=>longurl" 127.0.0.1:7777
 		try:
-			short, long = urls.split("=>")
+			short, long = urls.split(" = >")
 		except:
 			s.send_response(418)
 			s.send_header("Content-type","text/teapot")
 			s.end_headers()
-			s.wfile.write("Invalid url format. Use \"shorturl=>longurl\"\n")
+			s.wfile.write("Invalid url format. Use \"shorturl => longurl\"\n")
 			return 1
 		if short == '' or long == '' or not long.startswith("http://"): # any other way?
 			return 0 # silently drop
