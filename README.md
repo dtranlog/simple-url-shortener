@@ -2,5 +2,7 @@
 Simple url shortener
 ====================
 
-Enter your redirecting urls in redirects.txt or use the "shorturl => longurl" format in a POST request.
+Enter your initial redirecting urls in redirects.txt.
+Edit the sample index.html, only the input names must be kept the same.
+Then, just run shorturl.py and go to /submit.html to add extra urls via the form.
 

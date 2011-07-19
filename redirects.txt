@@ -1,10 +1,19 @@
 # example redirects file
 # format :  shorturl => longurl
 
-/g => http://www.google.com
-/r => http://www.reddit.com
-/w => http://www.wikipedia.org
-/y => http://www.youtube.com
-/+ => http://plus.google.com
-/r/tf2 => http://www.reddit.com/r/tf2
+/g => http://www.google.com (1)
+/r => http://www.reddit.com (2)
+/w => http://www.wikipedia.org (5)
+/y => http://www.youtube.com (3)
+/+ => http://plus.google.com (1)
+/r/tf2 => http://www.reddit.com/r/tf2 (5)
+/motw => http://www.doughellmann.com/PyMOTW/ (6)
+/l => http://gen.lib.rus.ec/ (23)
+/mood => http://stereomood.com/
+/teapot => http://www.ietf.org/rfc/rfc2324.txt
+/vids => http://www.doublejump.eu/links.html
+/git => http://www.github.com
 
+/e => http://etf2l.org/forum/
+/alg => http://www.algorithm.co.il/blogs/
+/one => http://vanillatf2.org (0)
