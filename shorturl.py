@@ -28,6 +28,13 @@ def load_file(file=FILE):
 				short,long = r.split(" => ")
 				redirections[short] = [long, 0]
 	#print redirections
+	
+def	dump_file(file=FILE):
+	with open(FILE,"w") as f:
+		f.write("")
+	with open(FILE, "a") as f:
+		for short in redirections.keys():
+			f.write("%s => %s (%s)\n" % (short, redirections[short][0], str(redirections[short][1])))
 			
 
 
@@ -35,9 +42,8 @@ class ShortURLHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 	
 	load_file()
 	
-	def handle_(self):
-		if self.path("/404"):
-			self.send_response(404)
+				
+	
 		
 				
 	def write_urls(self,shorturl,longurl,file=FILE):
@@ -122,6 +128,7 @@ if __name__ == '__main__':
 	httpd = server_class(connection_tuple, ShortURLHandler)
 	print "=> Server starting."
 	try: httpd.serve_forever()
-	except KeyboardInterrupt: pass
+	except KeyboardInterrupt:
+		dump_file()
 	httpd.server_close()
 	
