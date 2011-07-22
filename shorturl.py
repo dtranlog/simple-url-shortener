@@ -100,13 +100,16 @@ class ShortURLHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 		string = self.rfile.read(query_length)
 		self.args = dict(cgi.parse_qsl(string))
 		
-		if self.args['shorturl'] == '' or self.args['longurl'] == '' or not self.args['longurl'].startswith("http://") or self.args['shorturl'] == '404': # any other way?
-			self.send_response(400)
-			self.send_header("Content-type","text/plain")
-			self.end_headers()
-			self.wfile.write("Invalid url format(s).\n")
-			return 1
+		try:
+			if self.args['shorturl'] == '' or self.args['longurl'] == '' or not self.args['longurl'].startswith("http://") or self.args['shorturl'] == '404': # any other way?
+				self.send_response(400)
+				self.send_header("Content-type","text/plain")
+				self.end_headers()
+				self.wfile.write("Invalid url format(s).\n")
+				return 1
 			
+		except:
+			return 0
 		
 		self.send_response(200)
 		self.send_header("Content-type", "text/html")
