@@ -8,6 +8,7 @@
 import BaseHTTPServer
 import sys
 import cgi
+import operator
 
 connection_tuple = ('127.0.0.1',7777)
 redirections = {}
@@ -21,15 +22,15 @@ def load_file(file=FILE):
 		if not r.startswith("#") and r:
 			try:
 				urls, count = r.split("(")
-				count = count.split(")")[0]
+				count = count.split(")")[0].rstrip().lstrip()
 				[short,long] = urls.split(" => ")
-				redirections[short] = [long, int(count)]
+				redirections[short.rstrip().lstrip()] = [long.rstrip().lstrip(), int(count)]
 			except:
 				short,long = r.split(" => ")
-				redirections[short] = [long, 0]
+				redirections[short.lstrip().rstrip()] = [long.rstrip().lstrip(), 0]
 	#print redirections
 	
-def	dump_file(file=FILE):
+def dump_file(file=FILE):
 	with open(FILE,"w") as f:
 		f.write("")
 	with open(FILE, "a") as f:
@@ -80,9 +81,8 @@ class ShortURLHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 			self.send_header("Pragma","no-cache")
 			self.send_header("Expires", "Wed, 11 Jan 1984 05:00:00 GMT")
 			self.end_headers()
-			#print redirections.keys()
-			for url in redirections.keys():
-				self.wfile.write("%s => %s (%s)\n" % (url, redirections[url][0], str(redirections[url][1])))
+			for line in sorted(redirections.items(), key=lambda x: x[1][1], reverse=True):
+				self.wfile.write("%s => %s (%s)\n" % (line[0], line[1][0], line[1][1]))
 				
 		elif self.path == "/submit.html" or self.path == "/submit":
 			self.send_response(200)
