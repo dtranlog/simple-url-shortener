@@ -77,12 +77,17 @@ class ShortURLHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 	def do_GET(self):
 		if self.path == "/":
 			self.send_response(200)
-			self.send_header("Content-type","text/plain")
+			self.send_header("Content-type","text/html")
 			self.send_header("Pragma","no-cache")
 			self.send_header("Expires", "Wed, 11 Jan 1984 05:00:00 GMT")
 			self.end_headers()
+			with open("style.css","r") as f:
+				style = f.read()
+			self.wfile.write("<html><head><title>Shorten URLs</title><style type=\"text/css\">%s</style></head><body> \
+					 <h1>URL Shortener</h1><ul>" % style)
 			for line in sorted(redirections.items(), key=lambda x: x[1][1], reverse=True):
-				self.wfile.write("%s => %s (%s)\n" % (line[0], line[1][0], line[1][1]))
+				self.wfile.write("<li><a href=\"%s\">%s</a> => %s (%s)</li><br />" % (line[0],line[0], line[1][0], line[1][1]))
+			self.wfile.write("</ul></body></html>")
 				
 		elif self.path == "/submit.html" or self.path == "/submit":
 			self.send_response(200)
