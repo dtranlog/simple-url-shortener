@@ -8,8 +8,9 @@ body {
     text-shadow: 0px 1px 0px white;
 }
 
-h2 {
-    font-size: 125%;
+h1 {
+    font-weight:normal;
+    padding-left: 50px;
 }
 
 a {
