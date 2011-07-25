@@ -84,9 +84,9 @@ class ShortURLHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 			with open("style.css","r") as f:
 				style = f.read()
 			self.wfile.write("<html><head><title>Shorten URLs</title><style type=\"text/css\">%s</style></head><body> \
-					 <h1>URL Shortener</h1><ul>" % style)
+					 <h1>previously shortened urls</h1><ul>" % style)
 			for line in sorted(redirections.items(), key=lambda x: x[1][1], reverse=True):
-				self.wfile.write("<li><a href=\"%s\">%s</a> => %s (%s)</li><br />" % (line[0],line[0], line[1][0], line[1][1]))
+				self.wfile.write("<li><a href=\"%s\"><b>%s</b> => %s (%s)</li></a><br />" % (line[0].lower(),line[0].lower(), line[1][0].lower(), line[1][1]))
 			self.wfile.write("</ul></body></html>")
 				
 		elif self.path == "/submit.html" or self.path == "/submit":
@@ -106,11 +106,11 @@ class ShortURLHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 		self.args = dict(cgi.parse_qsl(string))
 		
 		try:
-			if self.args['shorturl'] == '' or self.args['longurl'] == '' or not self.args['longurl'].startswith("http://") or self.args['shorturl'] == '404': # any other way?
+			if self.args['shorturl'] == '' or self.args['longurl'] == '' or not self.args['longurl'].startswith("http://") or self.args['shorturl'] == '404' or self.args['shorturl'] in redirections.keys(): # any other way?
 				self.send_response(400)
 				self.send_header("Content-type","text/plain")
 				self.end_headers()
-				self.wfile.write("Invalid url format(s).\n")
+				self.wfile.write("Invalid url.\n")
 				return 1
 			
 		except:
@@ -127,6 +127,9 @@ class ShortURLHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 		% (connection_tuple[0], connection_tuple[1],self.args['shorturl'], self.args['longurl'])
 		self.wfile.write(html)	
 		self.write_urls(self.args['shorturl'], self.args['longurl'])
+		
+	def log_message(self, format, *args):
+		return
 		
 		
 		
